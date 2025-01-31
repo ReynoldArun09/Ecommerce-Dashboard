@@ -201,3 +201,37 @@ export const unassignManager = AsyncHandler(
     });
   }
 );
+
+/**
+ * controller to create a order
+ * @description create a order
+ *
+ *
+ * @returns {Response} Json response containing:
+ * - message Success message
+ * - data new order
+ */
+export const CreateOrder = AsyncHandler(async (req: Request, res: Response) => {
+  const { totalAmount, items } = req.body;
+
+  console.log(totalAmount);
+  console.log(items);
+
+  const order = await prisma.order.create({
+    data: {
+      totalAmount: parseInt(totalAmount),
+      items: {
+        create: items.map((item) => ({
+          productId: item.productId,
+          quantity: item.quantity,
+          price: item.price,
+        })),
+      },
+    },
+  });
+
+  res.status(201).json({
+    message: "Order created successfully!",
+    data: order,
+  });
+});

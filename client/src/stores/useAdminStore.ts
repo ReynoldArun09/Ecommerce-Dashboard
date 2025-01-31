@@ -2,13 +2,14 @@ import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { create } from "zustand";
 import axiosInstace from "../lib/axios";
+import { ProductType } from "../types";
 import { RegisterSchemaType } from "../validations/auth.schema";
 import { productSchemaType } from "../validations/product.schema";
 
 interface initialState {
   loading: boolean;
   users: [];
-  products: any[];
+  products: ProductType[];
   createUser: (values: RegisterSchemaType) => void;
   getAllUsers: () => void;
   deleteUser: (id: number) => void;

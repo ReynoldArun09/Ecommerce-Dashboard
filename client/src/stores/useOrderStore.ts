@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { create } from "zustand";
 import axiosInstace from "../lib/axios";
-import { OrderType } from "../types";
+import { CreateOrderType, OrderType } from "../types";
 
 interface initialState {
   loading: boolean;
@@ -13,6 +13,7 @@ interface initialState {
     status: "PENDING" | "COMPLETED" | "CANCELLED"
   ) => void;
   getAllOrderForManager: () => void;
+  createOrder: ({ totalAmount, items }: CreateOrderType) => void;
 }
 
 export const useOrderStore = create<initialState>((set) => ({
@@ -44,6 +45,24 @@ export const useOrderStore = create<initialState>((set) => ({
     set({ loading: true });
     try {
       const response = await axiosInstace.get(`/order/all-orders-assigned`);
+      set({ orders: response.data.data, loading: false });
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        toast.error(error?.response?.data?.message || "An error occured");
+      } else {
+        toast.error("An error occured");
+      }
+    } finally {
+      set({ loading: false });
+    }
+  },
+  createOrder: async ({ totalAmount, items }: CreateOrderType) => {
+    set({ loading: true });
+    try {
+      const response = await axiosInstace.post(`/order/create-order`, {
+        totalAmount,
+        items,
+      });
       set({ orders: response.data.data, loading: false });
     } catch (error: unknown) {
       if (error instanceof AxiosError) {

@@ -20,3 +20,23 @@ export type ItemType = {
   url: string;
   icon: LucideIcon;
 };
+
+export type ProductType = {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+};
+
+export type OrderItem = {
+  productId: number;
+  productName?: string;
+  price: number;
+  quantity: number;
+};
+
+type CreateOrderType = {
+  totalAmount: number;
+  items: OrderItem[];
+};

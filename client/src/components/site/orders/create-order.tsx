@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -6,18 +5,21 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { BadgePlus } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { useAdminStore } from "../../../stores/useAdminStore";
+import { useOrderStore } from "../../../stores/useOrderStore";
+import { OrderItem } from "../../../types";
+import { Button } from "../../ui/button";
+import { Label } from "../../ui/label";
 import {
   SidebarGroup,
   SidebarMenu,
@@ -26,10 +28,44 @@ import {
 } from "../../ui/sidebar";
 
 export default function CreateOrder() {
+  const { products, getallProducts } = useAdminStore();
+  const { createOrder } = useOrderStore();
   const [open, setOpen] = useState(false);
+  const [items, setItems] = useState<OrderItem[]>([]);
+  const [totalAmount, setTotalAmount] = useState(0);
 
-  const form = useForm();
-  const onSubmit = () => {};
+  useEffect(() => {
+    getallProducts();
+  }, [getallProducts]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    createOrder({ totalAmount, items });
+  };
+
+  // Handle adding items to the order
+  const handleUpdateItems = (selectedProductName: string) => {
+    const findProduct = items.find(
+      (item) => item.productName === selectedProductName
+    );
+
+    if (findProduct) return;
+
+    const selectedProduct = products.find(
+      (product) => product.name === selectedProductName
+    );
+
+    if (selectedProduct) {
+      const newItem: OrderItem = {
+        productId: selectedProduct.id,
+        price: selectedProduct.price,
+        quantity: 1,
+      };
+      setItems((prevItems) => [...prevItems, newItem]);
+      setTotalAmount((prevTotal) => prevTotal + selectedProduct.price);
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -48,62 +84,37 @@ export default function CreateOrder() {
         <DialogHeader>
           <DialogTitle className="text-3xl">Add Order</DialogTitle>
         </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                </FormItem>
-              )}
+        <form className="space-y-3" onSubmit={handleSubmit}>
+          <div>
+            <Label>Total Amount</Label>
+            <Input
+              placeholder="Enter Total Amount"
+              type="number"
+              value={Math.ceil(totalAmount)}
+              readOnly
             />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="price"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Price</FormLabel>
-                  <FormControl>
-                    <Input {...field} type="number" />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="stock"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Stock</FormLabel>
-                  <FormControl>
-                    <Input {...field} type="number" />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormDescription className="pt-4">
-              Please fill in all the fields
-            </FormDescription>
-            <Button type="submit">Submit</Button>
-          </form>
-        </Form>
+          </div>
+          <div>
+            <Select onValueChange={handleUpdateItems}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select Products" />
+              </SelectTrigger>
+              <SelectContent>
+                {products.map((product) => (
+                  <SelectItem value={product.name} key={product.id}>
+                    {product.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            {items.map((item) => (
+              <li key={item.productId}>{item.productName}</li>
+            ))}
+          </div>
+          <Button type="submit">Create Order</Button>
+        </form>
       </DialogContent>
     </Dialog>
   );

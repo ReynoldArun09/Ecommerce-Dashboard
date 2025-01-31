@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   assignBulkOrdersToManager,
+  CreateOrder,
   getAllManagers,
   getAllordersByAdmin,
   getOrdersAssignedToManager,
@@ -14,6 +15,7 @@ import {
 
 const orderRoutes = Router();
 
+orderRoutes.post("/create-order", AuthMiddleware, CreateOrder);
 orderRoutes.get("/all-orders", AuthMiddleware, getAllordersByAdmin);
 orderRoutes.get("/all-managers", AuthMiddleware, getAllManagers);
 orderRoutes.get(
