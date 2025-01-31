@@ -51,6 +51,12 @@ export default function Asidebar() {
           </SidebarGroup>
         </SidebarContent>
         <SidebarFooter>
+          <SidebarMenu className="pl-4 font-bold space-y-1 uppercase">
+            <span>{user?.username}</span>
+            <Separator />
+            <span>{user?.email}</span>
+            <Separator />
+          </SidebarMenu>
           <SidebarMenu>
             <Button variant={"default"} onClick={() => setIsOpen(true)}>
               Logout
