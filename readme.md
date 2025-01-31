@@ -9,7 +9,7 @@
 1. **Clone the Repository**
 
    ```bash
-   git clone
+   git clone https://github.com/ReynoldArun09/Ecommerce-Dashboard
    cd Ecommerce-Dashboard
    ```
 
@@ -46,14 +46,15 @@
    #seed dummy data
    npm run seed
 
+   #testing admin account
+   - admin1@example.com
+   - hashedpassword123
+
    # Install client dependencies
    cd ../client
    npm install
 
-
-
    # To view prisma db run npx prisma studio in server directory
-
 
    ```
 
@@ -76,3 +77,5 @@
 5. **Access the Application**
    - client: http://localhost:5173
    - server API: http://localhost:3000
+  
+
