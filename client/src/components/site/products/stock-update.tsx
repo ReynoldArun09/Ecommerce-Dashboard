@@ -20,14 +20,16 @@ export default function StockUpdate({ id, stockValue }: StockUpdateProps) {
 
   useEffect(() => {
     socket?.on("stockupdated", (stockData) => {
-      setLocalValue(stockData.stock);
-      updateStock(stockData.id, stockData.stock);
+      if (stockData.id === id) {
+        setLocalValue(stockData.stock);
+        updateStock(stockData.id, stockData.stock);
+      }
     });
 
     return () => {
       socket?.off("stockupdated");
     };
-  }, [socket, updateStock]);
+  }, [socket, updateStock, id]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(e.target.value);
