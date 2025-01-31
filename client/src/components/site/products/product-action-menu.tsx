@@ -24,7 +24,6 @@ export default function UserActionMenu({ id }: { id: number }) {
   }
 
   const handleDeleteProduct = () => {
-    if (id) return;
     deleteProduct(id);
   };
 

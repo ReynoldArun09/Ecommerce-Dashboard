@@ -19,15 +19,15 @@ export default function StockUpdate({ id, stockValue }: StockUpdateProps) {
   const role = user?.role;
 
   useEffect(() => {
-    if (role === "MANAGER") return;
     socket?.on("stockupdated", (stockData) => {
+      setLocalValue(stockData.stock);
       updateStock(stockData.id, stockData.stock);
     });
 
     return () => {
       socket?.off("stockupdated");
     };
-  }, [socket, updateStock, role]);
+  }, [socket, updateStock]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(e.target.value);
@@ -38,13 +38,15 @@ export default function StockUpdate({ id, stockValue }: StockUpdateProps) {
   };
 
   return (
-    <Input
-      readOnly={role === "MANAGER"}
-      disabled={role === "MANAGER"}
-      type="number"
-      value={localValue}
-      onChange={handleChange}
-      className="w-24"
-    />
+    <div>
+      <Input
+        readOnly={role === "MANAGER"}
+        disabled={role === "MANAGER"}
+        type="number"
+        value={localValue}
+        onChange={handleChange}
+        className="w-24"
+      />
+    </div>
   );
 }

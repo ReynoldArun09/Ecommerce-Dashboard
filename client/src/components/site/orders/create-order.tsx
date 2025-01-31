@@ -41,6 +41,7 @@ export default function CreateOrder() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     createOrder({ totalAmount, items });
+    setOpen(!open);
   };
 
   // Handle adding items to the order

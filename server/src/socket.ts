@@ -44,7 +44,6 @@ io.on("connection", (socket) => {
           stock: parseInt(stock),
         },
       });
-      console.log(updateStock);
 
       io.emit("stockupdated", updateStock);
       console.log(`stock ${id} updated`);
@@ -62,6 +61,17 @@ io.on("connection", (socket) => {
         },
         data: {
           managerId: managerId,
+        },
+        select: {
+          id: true,
+          managerId: true,
+          status: true,
+          totalAmount: true,
+          manager: {
+            select: {
+              username: true,
+            },
+          },
         },
       });
 

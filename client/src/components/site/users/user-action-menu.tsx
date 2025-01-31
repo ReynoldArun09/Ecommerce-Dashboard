@@ -13,11 +13,9 @@ export default function UserActionMenu({ id }: { id: number }) {
   const { updateRole, deleteUser } = useAdminStore();
 
   const handleDeleteUser = () => {
-    if (!id) return;
     deleteUser(id);
   };
   const handleToggleRole = () => {
-    if (!id) return;
     updateRole(id);
   };
 
