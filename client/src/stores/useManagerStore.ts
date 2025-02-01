@@ -27,8 +27,6 @@ export const useManagerStore = create<initialState>((set, get) => ({
       } else {
         toast.error("An error occured");
       }
-    } finally {
-      set({ loading: false });
     }
   },
   assignBulk: async (managerId: number) => {
@@ -48,8 +46,6 @@ export const useManagerStore = create<initialState>((set, get) => ({
       } else {
         toast.error("An error occured");
       }
-    } finally {
-      set({ loading: false });
     }
   },
   unassignManager: async (managerId: number, orderId: number) => {
@@ -69,8 +65,6 @@ export const useManagerStore = create<initialState>((set, get) => ({
       } else {
         toast.error("An error occured");
       }
-    } finally {
-      set({ loading: false });
     }
   },
 }));

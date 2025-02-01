@@ -187,6 +187,8 @@ export const deleteUserByAdmin = AsyncHandler(
   async (req: Request, res: Response) => {
     const userId = req.params.id;
 
+    const userIdNum = parseInt(userId);
+
     const existingUser = await prisma.user.findUnique({
       where: {
         id: parseInt(userId),
@@ -197,9 +199,13 @@ export const deleteUserByAdmin = AsyncHandler(
       throw new CustomError("user not found", 400);
     }
 
+    if (userIdNum === existingUser.id) {
+      throw new CustomError("You cannot delete your own account from UI", 400);
+    }
+
     await prisma.user.delete({
       where: {
-        id: parseInt(userId),
+        id: userIdNum,
       },
     });
 

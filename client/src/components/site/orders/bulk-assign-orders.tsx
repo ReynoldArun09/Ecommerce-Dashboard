@@ -1,6 +1,7 @@
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -65,6 +66,7 @@ export default function BulkAssignOrders() {
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
           <DialogTitle className="text-3xl">Bulk Assign Orders</DialogTitle>
+          <DialogDescription></DialogDescription>
         </DialogHeader>
         <Select onValueChange={handleSelectChange}>
           <SelectTrigger className="w-[180px]">

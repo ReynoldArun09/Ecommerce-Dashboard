@@ -26,7 +26,7 @@ model Order {
     status      OrderStatus @default(PENDING)
     totalAmount Float
     managerId   Int?
-    manager     User?       @relation("ManagedOrders", fields: [managerId], references: [id])
+    manager     User?       @relation("ManagedOrders", fields: [managerId], references: [id], onDelete: Cascade)
     items       OrderItem[]
     createdAt   DateTime    @default(now())
     updatedAt   DateTime    @updatedAt
@@ -35,9 +35,9 @@ model Order {
 model OrderItem {
     id        String  @id @default(uuid())
     orderId   Int
-    order     Order   @relation(fields: [orderId], references: [id])
+    order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
     productId Int
-    product   Product @relation(fields: [productId], references: [id])
+    product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
     quantity  Int
     price     Float
 

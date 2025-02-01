@@ -51,16 +51,12 @@ export const useAdminStore = create<initialState>((set, get) => ({
       } else {
         toast.error("An error occured");
       }
-    } finally {
-      set({ loading: false });
     }
   },
   getAllUsers: async () => {
-    set({ loading: true });
-
     try {
       const response = await axiosInstace.get("/admin/view-all-users");
-      set({ users: response.data.data, loading: false });
+      set({ users: response.data.data });
     } catch (error: unknown) {
       set({ loading: false });
       if (error instanceof AxiosError) {
@@ -68,8 +64,6 @@ export const useAdminStore = create<initialState>((set, get) => ({
       } else {
         toast.error("An error occured");
       }
-    } finally {
-      set({ loading: false });
     }
   },
   deleteUser: async (id: number) => {
@@ -95,8 +89,6 @@ export const useAdminStore = create<initialState>((set, get) => ({
     }
   },
   updateRole: async (id: number) => {
-    set({ loading: true });
-
     try {
       const response = await axiosInstace.put(`/admin/update-role/${id}`);
       if (response.status === 200) {
@@ -110,8 +102,6 @@ export const useAdminStore = create<initialState>((set, get) => ({
       } else {
         toast.error("An error occured");
       }
-    } finally {
-      set({ loading: false });
     }
   },
   createProduct: async ({
@@ -141,13 +131,9 @@ export const useAdminStore = create<initialState>((set, get) => ({
       } else {
         toast.error("An error occured");
       }
-    } finally {
-      set({ loading: false });
     }
   },
   deleteProduct: async (id: number) => {
-    set({ loading: true });
-
     try {
       const response = await axiosInstace.delete(`/admin/delete-product/${id}`);
       if (response.status === 200) {
@@ -160,24 +146,18 @@ export const useAdminStore = create<initialState>((set, get) => ({
       } else {
         toast.error("An error occured");
       }
-    } finally {
-      set({ loading: false });
     }
   },
   getallProducts: async () => {
-    set({ loading: true });
-
     try {
       const response = await axiosInstace.get(`/admin/all-products`);
-      set({ products: response.data.data, loading: false });
+      set({ products: response.data.data });
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         toast.error(error?.response?.data?.message || "An error occured");
       } else {
         toast.error("An error occured");
       }
-    } finally {
-      set({ loading: false });
     }
   },
   updateStock: (id: number, stock: number) => {

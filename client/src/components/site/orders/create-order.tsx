@@ -1,6 +1,7 @@
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -60,6 +61,7 @@ export default function CreateOrder() {
       const newItem: OrderItem = {
         productId: selectedProduct.id,
         price: selectedProduct.price,
+        productName: selectedProduct.name,
         quantity: 1,
       };
       setItems((prevItems) => [...prevItems, newItem]);
@@ -84,6 +86,7 @@ export default function CreateOrder() {
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
           <DialogTitle className="text-3xl">Add Order</DialogTitle>
+          <DialogDescription></DialogDescription>
         </DialogHeader>
         <form className="space-y-3" onSubmit={handleSubmit}>
           <div>

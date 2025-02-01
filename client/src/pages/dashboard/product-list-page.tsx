@@ -3,12 +3,16 @@ import { useEffect, useMemo } from "react";
 import { columns } from "../../components/site/products/product-column";
 import { useAdminStore } from "../../stores/useAdminStore";
 
+const filterName = "name";
+
 export default function ProductListPage() {
   const { getallProducts, products } = useAdminStore();
 
   useEffect(() => {
-    getallProducts();
-  }, [getallProducts]);
+    if (products.length === 0) {
+      getallProducts();
+    }
+  }, [getallProducts, products.length]);
 
   const productsData = useMemo(() => products, [products]);
 
@@ -17,7 +21,7 @@ export default function ProductListPage() {
       <DataTable
         columns={columns}
         data={productsData ?? []}
-        filterName={"name"}
+        filterName={filterName}
       />
     </section>
   );

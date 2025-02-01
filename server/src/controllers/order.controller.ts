@@ -77,6 +77,7 @@ export const getOrdersAssignedToManager = AsyncHandler(
  * controller to assgin bulk orders to manager
  * @description assign orders to manager in bulk only works if manager orders have no manager set
  *
+ * @throws {CustomError} 400 - if manager and his role doesnt exist or match
  *
  * @returns {Response} Json response containing:
  * - message Success message
@@ -214,18 +215,17 @@ export const unassignManager = AsyncHandler(
 export const CreateOrder = AsyncHandler(async (req: Request, res: Response) => {
   const { totalAmount, items } = req.body;
 
-  console.log(totalAmount);
-  console.log(items);
-
   const order = await prisma.order.create({
     data: {
       totalAmount: parseInt(totalAmount),
       items: {
-        create: items.map((item) => ({
-          productId: item.productId,
-          quantity: item.quantity,
-          price: item.price,
-        })),
+        create: items.map(
+          (item: { productId: number; quantity: number; price: number }) => ({
+            productId: item.productId,
+            quantity: item.quantity,
+            price: item.price,
+          })
+        ),
       },
     },
   });

@@ -46,13 +46,18 @@
    #seed dummy data
    npm run seed
 
-   #testing admin account
-   - admin1@example.com
-   - hashedpassword123
 
    # Install client dependencies
    cd ../client
    npm install
+
+   #testing admin account
+   - admin1@example.com
+   - hashedpassword123
+
+   #testing manager account
+   - manager1@example.com
+   - managerpass123
 
    # To view prisma db run npx prisma studio in server directory
 
@@ -77,5 +82,3 @@
 5. **Access the Application**
    - client: http://localhost:5173
    - server API: http://localhost:3000
-  
-

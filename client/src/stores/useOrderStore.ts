@@ -38,8 +38,6 @@ export const useOrderStore = create<initialState>((set) => ({
       } else {
         toast.error("An error occured");
       }
-    } finally {
-      set({ loading: false });
     }
   },
   getAllOrderForManager: async () => {
@@ -53,26 +51,21 @@ export const useOrderStore = create<initialState>((set) => ({
       } else {
         toast.error("An error occured");
       }
-    } finally {
-      set({ loading: false });
     }
   },
   createOrder: async ({ totalAmount, items }: CreateOrderType) => {
     set({ loading: true });
     try {
-      const response = await axiosInstace.post(`/order/create-order`, {
+      await axiosInstace.post(`/order/create-order`, {
         totalAmount,
         items,
       });
-      set({ orders: response.data.data, loading: false });
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         toast.error(error?.response?.data?.message || "An error occured");
       } else {
         toast.error("An error occured");
       }
-    } finally {
-      set({ loading: false });
     }
   },
   updateOrders: (id: number, managerId: number, username: string) => {
