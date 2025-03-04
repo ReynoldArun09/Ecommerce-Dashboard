@@ -1,10 +1,47 @@
-# Ecommerce Dashboard
+# 🛒 E-commerce Dashboard
+
+A feature-rich **E-commerce Dashboard** built with **Node.js, Express, TypeScript, and MongoDB**, providing a robust admin and manager panel to manage users, products, and orders efficiently.
+
+## ✨ Features
+
+### 🔐 Authentication & Authorization
+- Secure login system using **JWT (jsonwebtoken), bcrypt, and cookies**
+- **AuthMiddleware** for protected routes
+- **Role-based authorization** (Admin, Manager, User)
+
+### 👤 User Management
+- Full **CRUD operations** for users
+- **Admin-only** access to view all users
+- **Change user roles** (Admin can promote/demote users)
+
+### 📦 Product Management
+- **CRUD operations** for products
+- **Managers can only view products**
+
+### 📦 Order Management
+- **Bulk order assignment** if any orders are unassigned
+- **Assign single order to a manager** via **Socket.io**
+- **Real-time order status updates** with **Socket.io**
+
+### 📊 Stock Management
+- **Update stock in real-time** using **Socket.io**
+
+### 🛠️ Admin Privileges
+- **View all orders, products, and users**
+- **Manage order status updates in real-time**
+
+## 🚀 Tech Stack
+
+✅ **Node.js** | **Express.js** | **TypeScript** | **MongoDB** | **Socket.io** | **JWT & Bcrypt**
+
 
 ### Local Development Setup
 
 ### Prerequisites
 
 - Node.js (v22 or higher)
+
+## 📌 Installation
 
 1. **Clone the Repository**
 
@@ -82,3 +119,5 @@
 5. **Access the Application**
    - client: http://localhost:5173
    - server API: http://localhost:3000
+
+
